@@ -1,52 +1,65 @@
-# Guia de Ajuda - Command Center
+# Command Center
 
-## Solução de Problemas Comuns
+## Descrição
 
-### 1. Erro de Conexão com o Banco de Dados
+O **Command Center** é uma solução em Java que permite a recepção e manipulação de pedidos de clientes. A API aceita pedidos em formato JSON e XML, calcula descontos com base na quantidade de produtos e armazena os pedidos em um banco de dados MySQL.
 
-**Problema:** A aplicação não consegue conectar ao banco de dados MySQL.
+## Funcionalidades
 
-**Solução:**
-- Verifique se o MySQL está em execução.
-- Certifique-se de que as credenciais de acesso no `application.properties` estão corretas.
-- Teste a conexão manualmente com o comando:
+- Recepção de pedidos em formatos JSON e XML.
+- Validação de número de controle para evitar duplicatas.
+- Aplicação automática de descontos baseados na quantidade de produtos.
+- Persistência dos pedidos em um banco de dados MySQL.
+- API RESTful para consulta de pedidos.
+
+## Tecnologias Utilizadas
+
+- Java 21
+- Spring Boot 3.1
+- Spring Data JPA
+- MySQL
+- Lombok
+
+## Como Configurar e Executar o Projeto
+
+### Pré-requisitos
+
+- JDK 21 instalado
+- Maven instalado
+- MySQL instalado e em execução
+
+### Passos para Configuração
+
+1. **Clone o repositório:**
     ```bash
-    mysql -u root -p
+    git clone https://github.com/seuusuario/command-center.git
+    cd command-center
     ```
 
-### 2. Problemas de Compilação ou Execução
+2. **Configure o Banco de Dados:**
 
-**Problema:** O projeto não compila ou não executa corretamente.
-
-**Solução:**
-- Certifique-se de que você está usando o JDK 21.
-- Rode `mvn clean install` para garantir que todas as dependências estão atualizadas.
-- Verifique se todas as dependências do Maven estão corretamente definidas no `pom.xml`.
-
-### 3. Como Configurar um Ambiente de Desenvolvimento
-
-- **IDE:** Recomenda-se o uso do IntelliJ IDEA para o desenvolvimento com Java.
-- **Plugin Lombok:** Certifique-se de que o plugin Lombok está habilitado na sua IDE.
-- **Testes:** Rode os testes unitários com:
-    ```bash
-    mvn test
+  - Crie o banco de dados MySQL necessário e ajuste as credenciais no arquivo `application.properties`:
+    ```properties
+    spring.datasource.url=jdbc:mysql://localhost:3306/command_center_db
+    spring.datasource.username=root
+    spring.datasource.password=root
     ```
 
-### 4. Extensão e Personalização
+  - Execute o script SQL localizado em `src/main/resources/schema.sql` para criar as tabelas necessárias:
+    ```bash
+    mysql -u root -p command_center_db < src/main/resources/schema.sql
+    ```
 
-Se você deseja estender as funcionalidades da API, siga os passos:
+3. **Compile e execute a aplicação:**
+    ```bash
+    mvn clean install
+    mvn spring-boot:run
+    ```
 
-- **Adicionando Novos Endpoints:**
-    - Crie novos métodos no `PedidoController.java` e defina as rotas necessárias.
-    - Adicione a lógica de negócios correspondente no `PedidoService.java`.
+4. **Acesse a API:**
+  - A API estará disponível em `http://localhost:8080/api/pedidos`.
 
-- **Adicionando Novas Entidades:**
-    - Crie novas classes no pacote `model` e mapeie-as com JPA.
-    - Crie repositórios para as novas entidades em `repository`.
+## Endpoints Principais
 
-### 5. Contato para Suporte
-
-Se você encontrar problemas que não consegue resolver, entre em contato:
-
-- **Email:** seuemail@exemplo.com
-- **GitHub Issues:** Para relatar problemas, use a página de [Issues](https://github.com/seuusuario/command-center/issues).
+- `POST /api/pedidos`: Criar um novo pedido.
+- `GET /api/pedidos`: Consultar pedidos existentes.
