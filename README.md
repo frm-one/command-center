@@ -14,7 +14,7 @@ O **Command Center** é uma solução em Java que permite a recepção e manipul
 
 ## Tecnologias Utilizadas
 
-- Java 21
+- Java 8
 - Spring Boot 3.1
 - Spring Data JPA
 - MySQL
